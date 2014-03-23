@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>All Invoices for Zen-Cart&reg; v1.5.0, v1.5.1</title>
+
+<style type="text/css">
+<!--
+a, a:active, a:visited {
+  color: #006666;
+  text-decoration: none
+}
+a:hover {
+    color:#00CC99;
+    text-decoration: underline;
+}
+BODY, P, H1, H2, H3, H4, H5, H6, LI, TD, DD, DT, table, img {
+  font-family: Verdana, AvantGarde, Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  color: black;
+  padding: 0px;
+  margin: 20px;
+}
+H1, H2, H3, H4 {
+  font-weight: bold;
+  clear: both;
+}
+h1 {
+  font-size: 20px;
+}
+h2 {
+  font-size: 16px;
+  border-top: 1px dashed #000066;
+  padding-top: 5px;
+  color: #000066;
+}
+h3 {
+  border-top: 1px dotted #3333ff;
+  color: #3333ff;
+}
+code {
+  padding-left: 25px;
+}
+table { 
+  border-collapse: collapse; 
+}
+th, td {
+  border: 1px solid #000066;
+  padding: 5px;
+  text-align: left;
+}
+ol li, ul li {
+  margin: 0 0 5px;
+}
+ol li ul li, ul li ul li {
+  margin: 0 auto 5px;
+}
+tr td:first-child {
+  font-weight: bold;
+  color: #000066;
+}
+.smaller {
+  font-size: 10px;
+}
+.o {
+  background-color: #f4f4f4;
+}
+dt {
+  width: 50px;
+  font-weight: bold;
+  float: left;
+  clear: left;
+  margin: 5px 20px;
+}
+dd {
+  float: left;
+  margin: 5px 20px;
+}
+.lastdt {
+  margin-bottom: 20px;
+}
+-->
+</style>
+</head>
+
+<body>
+<a name="top" id="top"></a>
+<h1>All Invoices for Zen Cart v1.5.0, v1.5.1</h1>
+<h3>Version 2.0.0 by lat9</h3>
+<p>Current support thread at Zen Cart Forums: <a href="http://www.zen-cart.com/showthread.php?150900-All-Invoices-Report-support" target="_blank">http://www.zen-cart.com/showthread.php?150900-All-Invoices-Report-support</a>.  This software is provided for your use under the GNU General Public License.</p>
+
+<h2>Version History:</h2>
+<p>v2.0.0 of this plugin has been modified to operate properly with Zen Cart v1.5.0 and later <em>only</em>.</p>
+<ul>
+  <li>v1.0, 2010-03-19, Initial release (Mathew O'Marah).</li>
+  <li>v1.1, 2010-04-12, Fixed bug in product name (removed function call) (Mathew O'Marah).</li>
+  <li>v2.0.0, 2013-05-19 (lat9):<ul>
+    <li>Updated for v1.5.0 and later <em>only</em>.</li>
+    <li>Moved all language items to the plugin's language file.</li>
+    <li>If there are no orders matching the selected order-status value, a message is displayed instead of displaying an empty page (i.e. a pseudo white-screen).</li>
+  </ul></li>
+</ul>
+<h3>Credits</h3>
+<p>Version 1.0 authored by:</p>
+<dl>
+  <dt>Name:</dt><dd>Mathew O'Marah</dd>
+  <dt>Company:</dt><dd>mdo design</dd>
+  <dt>E-Mail:</dt><dd>mat@mdodesign.co.uk</dd>
+  <dt class="lastdt">Web:</dt><dd>http://www.mdodesign.co.uk/</dd>
+</dl>
+
+<h2>What it does</h2>
+<p>For busy stores you quite often print all the outstanding invoices, pick the orders and then go in to update the status of the orders. This plugin allows you to view and print the invoices for all orders with a selected order-status with a single button click.</p>
+<p>Once you've installed the plugin, its auto-installer runs the first time someone signs into your Zen Cart admin.  To access the plugin, go to your admin's <em>Reports-&gt;All Invoices</em>.  From that page, use the dropdown to select the order-status value you'd like to display.  If any orders exist with the selected order-status, the invoices display (in a separate browser tab) onscreen as a continuous list without breaks, but if you print that page each invoice starts printing on a new page.</p>
+
+<h2>Installation</h2>
+<p>There are no core-file overwrites in this plugin, but you should <strong>always</strong> backup your cart's database and files prior to making any changes.</p>
+<p>Copy the following files to your cart's installation, after renaming the YOUR_ADMIN directory to match your custom admin directory's name:</p>
+<ol>
+  <li>/YOUR_ADMIN/all_invoices.php</li>
+  <li>/YOUR_ADMIN/includes/extra_datafiles/all_invoices_filenames.php</li>
+  <li>/YOUR_ADMIN/includes/functions/extra_functions/init_all_invoices.php</li>
+  <li>/YOUR_ADMIN/includes/languages/english/all_invoices.php</li>
+  <li>/YOUR_ADMIN/includes/languages/english/extra_definitions/all_invoices_name.php</li>
+  <li>/YOUR_ADMIN/includes/templates/tpl_all_invoices.php</li>
+</ol>
+
+<h2>Uninstall</h2>
+<p>First, delete the files that were copied to your zen-cart installation's admin directories then use your admin's <em>Tools-&gt;Run SQL Patches</em> to run the file <b>all_invoices_uninstall.sql</b> that is provided in the root directory of this package.</p>
+
+</body>
+</html>
