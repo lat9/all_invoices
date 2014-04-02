@@ -267,7 +267,7 @@ while (!$orders_status->EOF) {
 <!-- body_text_eof //-->
 
 <!-- Add page break for print out -->
-<br style="page-break-before: always;">
+<div style="page-break-before: always;"></div>
 
 <?php
 
