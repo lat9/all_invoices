@@ -3,3 +3,4 @@
 # lat9@vinosdefrutastropicales.com
 #
 DELETE FROM admin_pages WHERE page_key='reportsAllInvoices';
+DELETE FROM admin_pages WHERE page_key='reportsAllPackingSlips';

@@ -99,8 +99,9 @@ dd {
     <li>Moved all language items to the plugin's language file.</li>
     <li>If there are no orders matching the selected order-status value, a message is displayed instead of displaying an empty page (i.e. a pseudo white-screen).</li>
   </ul></li>
-  <li>v2.1.0, 2014-04-xx (lat9):<ul>
+  <li>v2.1.0, 2014-04-03 (lat9):<ul>
     <li>Page-breaks not happening in Chrome browser.  Changed /YOUR_ADMIN/includes/templates/tpl_all_invoices.php.</li>
+    <li>Add support to print packing slips for all matching orders, too.</li>
   </ul></li>
 </ul>
 <h3>Credits</h3>
@@ -113,19 +114,22 @@ dd {
 </dl>
 
 <h2>What it does</h2>
-<p>For busy stores you quite often print all the outstanding invoices, pick the orders and then go in to update the status of the orders. This plugin allows you to view and print the invoices for all orders with a selected order-status with a single button click.</p>
-<p>Once you've installed the plugin, its auto-installer runs the first time someone signs into your Zen Cart admin.  To access the plugin, go to your admin's <em>Reports-&gt;All Invoices</em>.  From that page, use the dropdown to select the order-status value you'd like to display.  If any orders exist with the selected order-status, the invoices display (in a separate browser tab) onscreen as a continuous list without breaks, but if you print that page each invoice starts printing on a new page.</p>
+<p>For busy stores you quite often print all the outstanding invoices and/or packing slips, pick the orders and then go in to update the status of the orders. This plugin allows you to view and print the invoices and/or packing slips for all orders with a selected order-status with a single button click.</p>
+<p>Once you've installed the plugin, its auto-installer runs the first time someone signs into your Zen Cart admin.  To access the plugin, go to your admin's <em>Reports-&gt;All Invoices</em> or <em>Reports-&gt;All Packing Slips</em>.  From that page, use the dropdown to select the order-status value you'd like to display.  If any orders exist with the selected order-status, the invoices/packing slips display (in a separate browser tab) on-screen as a continuous list without breaks, but if you print that page each invoice/packing slip starts printing on a new page.</p>
 
 <h2>Installation</h2>
 <p>There are no core-file overwrites in this plugin, but you should <strong>always</strong> backup your cart's database and files prior to making any changes.</p>
 <p>Copy the following files to your cart's installation, after renaming the YOUR_ADMIN directory to match your custom admin directory's name:</p>
 <ol>
   <li>/YOUR_ADMIN/all_invoices.php</li>
+  <li>/YOUR_ADMIN/all_packingslips.php</li>
   <li>/YOUR_ADMIN/includes/extra_datafiles/all_invoices_filenames.php</li>
   <li>/YOUR_ADMIN/includes/functions/extra_functions/init_all_invoices.php</li>
   <li>/YOUR_ADMIN/includes/languages/english/all_invoices.php</li>
+  <li>/YOUR_ADMIN/includes/languages/english/all_packingslips.php</li>
   <li>/YOUR_ADMIN/includes/languages/english/extra_definitions/all_invoices_name.php</li>
   <li>/YOUR_ADMIN/includes/templates/tpl_all_invoices.php</li>
+  <li>/YOUR_ADMIN/includes/templates/tpl_all_packingslips.php</li>
 </ol>
 
 <h2>Uninstall</h2>
