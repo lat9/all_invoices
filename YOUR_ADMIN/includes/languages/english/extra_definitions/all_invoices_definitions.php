@@ -28,3 +28,4 @@
 // ===============================================================================
 
 define('BOX_ALL_INVOICES', 'All Invoices');
+define ('BOX_ALL_PACKINGSLIPS', 'All Packing Slips');
