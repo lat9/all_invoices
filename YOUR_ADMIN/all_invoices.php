@@ -39,7 +39,7 @@ require('includes/application_top.php');
 $orderStatus = '';
 $order_message = '';
 if (isset($_GET['status'])) {
-  $orderStatus = $_GET['status'];
+  $orderStatus = (int)$_GET['status'];
   $orders_check = $db->Execute("SELECT count(*) AS total FROM " . TABLE_ORDERS . " WHERE orders_status = $orderStatus");
   if ($orders_check->fields['total'] > 0) {
     require('includes/templates/tpl_all_invoices.php');
