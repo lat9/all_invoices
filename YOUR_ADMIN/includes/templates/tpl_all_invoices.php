@@ -19,13 +19,14 @@
 // +----------------------------------------------------------------------+
 //
 // ===============================================================================
-// Add-On: All Invoices v1.1
-// Designed for: Zen Cart 1.3.x series
+// Add-On: All Invoices
+// Designed for: Zen Cart
 // Created by: Mathew O'Marah (www.mdodesign.co.uk)
 // -------------------------------------------------------------------------------
 // Version 2 modified by: lat9 (lat9@vinosdefrutastropicales.com) for v1.5.0
 //
 // v2.0.0, 2012-05-18:  require('includes/application_top.php') moved to all_invoices.php
+// v2.5 2016-03-16 - Added ability to update order status for displayed/printed orders.
 //
 // Donations:  Please support Zen Cart!  paypal@zen-cart.com  - Thank you!
 // ===============================================================================
@@ -46,15 +47,6 @@ include(DIR_WS_CLASSES . 'order.php');
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF">
 
 <?php
-
-$sql = "SELECT orders_id FROM ".TABLE_ORDERS." WHERE orders_status = ".$orderStatus;
-$pending_orders = $db->Execute($sql);
-
-while (!$pending_orders->EOF) {
-
-$oID = zen_db_prepare_input($pending_orders->fields['orders_id']);
-$order = new order($oID);
-
 // prepare order-status pulldown list
 $orders_statuses = array();
 $orders_status_array = array();
@@ -68,6 +60,8 @@ while (!$orders_status->EOF) {
   $orders_status->MoveNext();
 }
 
+foreach($pending_orders as $oID) {
+$order = new order( (int)$oID);
 ?>
 
 <!-- body_text //-->
@@ -230,7 +224,7 @@ while (!$orders_status->EOF) {
 <?php
     $orders_history = $db->Execute("select orders_status_id, date_added, customer_notified, comments
                                     from " . TABLE_ORDERS_STATUS_HISTORY . "
-                                    where orders_id = '" . zen_db_input($oID) . "'
+                                    where orders_id = '" . zen_db_input($oID) . "' and customer_notified > -1
                                     order by date_added");
 
     if ($orders_history->RecordCount() > 0) {
@@ -241,9 +235,11 @@ while (!$orders_status->EOF) {
              '            <td class="smallText" align="center">' . zen_datetime_short($orders_history->fields['date_added']) . '</td>' . "\n" .
              '            <td class="smallText" align="center">';
         if ($orders_history->fields['customer_notified'] == '1') {
-          echo zen_image(DIR_WS_ICONS . 'tick.gif', ICON_TICK) . "</td>\n";
+          echo zen_image(DIR_WS_ICONS . 'tick.gif', TEXT_YES) . "</td>\n";
+        } else if ($orders_history->fields['customer_notified'] == '-1') {
+          echo zen_image(DIR_WS_ICONS . 'locked.gif', TEXT_HIDDEN) . "</td>\n";
         } else {
-          echo zen_image(DIR_WS_ICONS . 'cross.gif', ICON_CROSS) . "</td>\n";
+          echo zen_image(DIR_WS_ICONS . 'unlocked.gif', TEXT_VISIBLE) . "</td>\n";
         }
         echo '            <td class="smallText">' . $orders_status_array[$orders_history->fields['orders_status_id']] . '</td>' . "\n";
         echo '            <td class="smallText">' . ($orders_history->fields['comments'] == '' ? TEXT_NONE : nl2br(zen_db_output($orders_history->fields['comments']))) . '&nbsp;</td>' . "\n" .
@@ -270,9 +266,7 @@ while (!$orders_status->EOF) {
 <div style="page-break-before: always;"></div>
 
 <?php
-
- $pending_orders->MoveNext();
-}
+} // endforeach
 ?>
 
 </body>

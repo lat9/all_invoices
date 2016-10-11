@@ -19,8 +19,8 @@
 // +----------------------------------------------------------------------+
 //
 // ===============================================================================
-// Add-On: All Invoices v1.0
-// Designed for: Zen Cart 1.3.x series
+// Add-On: All Invoices
+// Designed for: Zen Cart
 // Created by: Mathew O'Marah (www.mdodesign.co.uk)
 // -------------------------------------------------------------------------------
 // Version 2 modified by: lat9 (lat9@vinosdefrutastropicales.com) for v1.5.0
@@ -31,26 +31,63 @@
 //      - Moved all language-related text to the language files.
 //      - Use built-in Zen Cart function to create the order status dropdown.
 //
+// v2.5 2016-03-16 - Added ability to update order status for displayed/printed orders.
+// -------------------------------------------------------------------------------
 // Donations:  Please support Zen Cart!  paypal@zen-cart.com  - Thank you!
 // ===============================================================================
 
-//-bof-v2.0.0-Don't format invoices if there's nothing to format!
 require('includes/application_top.php');
 $orderStatus = '';
 $order_message = '';
+
+$statuses_array = $orders_status_array = array();
+$statuses = $db->Execute("select orders_status_id, orders_status_name
+                          from " . TABLE_ORDERS_STATUS . "
+                          where language_id = '" . (int)$_SESSION['languages_id'] . "'
+                          order by orders_status_id");
+
+while (!$statuses->EOF) {
+  $statuses_array[] = array('id' => $statuses->fields['orders_status_id'],
+                            'text' => $statuses->fields['orders_status_name'] . ' [' . $statuses->fields['orders_status_id'] . ']');
+  $orders_status_array[$statuses->fields['orders_status_id']] = $statuses->fields['orders_status_name'];
+  $statuses->MoveNext();
+}
+
 if (isset($_GET['status'])) {
   $orderStatus = (int)$_GET['status'];
   $orders_check = $db->Execute("SELECT count(*) AS total FROM " . TABLE_ORDERS . " WHERE orders_status = $orderStatus");
   if ($orders_check->fields['total'] > 0) {
-    require('includes/templates/tpl_all_invoices.php');
-    
-  } else {
-    $order_message = sprintf(WARNING_NO_ORDERS, zen_get_order_status_name($orderStatus));
-    
+
+    // get actual orderids from database
+    $sql = "SELECT orders_id FROM ".TABLE_ORDERS." WHERE orders_status = ".$orderStatus;
+    $result = $db->Execute($sql);
+    while(!$result->EOF) {
+      $selected_orders[] = $result->fields['orders_id'];
+      $result->MoveNext();
+    }
   }
+} elseif (isset($_POST['orderids'])) {
+  $pending_orders = explode(',', preg_replace('/[^0-9,]/', ',', $_POST['orderids']));
+  require('includes/templates/tpl_all_invoices.php');
+  exit(0);
+} elseif (isset($_POST['resetids'])) {
+  // clean POST list back to an iterable array
+  $pending_orders = preg_replace('/[^0-9,]/', ',', $_POST['resetids']);
+  $pending_orders = preg_replace('/,+/', ',', $pending_orders);
+  $pending_orders = explode(',', $pending_orders);
+  
+  $status = 2; // set to Processed
+  foreach($pending_orders as $oID) {
+    $sql = "UPDATE " . TABLE_ORDERS . " SET orders_status = " . (int)$status . ", last_modified = now() where orders_id = " . (int)$oID;
+    $db->Execute($sql);
+    $db->Execute("insert into " . TABLE_ORDERS_STATUS_HISTORY . "
+            (orders_id, orders_status_id, date_added, customer_notified)
+            values ('" . (int)$oID . "', " . (int)$status . ", now(), 0)");
+  }
+  $messageStack->add('Orders updated to "Processed"', 'success');
+} else {
+  $order_message = sprintf(WARNING_NO_ORDERS, zen_get_order_status_name($orderStatus));
 }
-if ($orderStatus == '' || $order_message != '') {
-//-eof-v2.0.0-Don't format invoices if there's nothing to format!
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html <?php echo HTML_PARAMS; ?>>
@@ -104,24 +141,34 @@ if ($order_message != '') {
 <?php
 }
 ?>
-
-          <form style="margin-left: 20px;" action="all_invoices.php" method="get" target="_new">
+<?php if (!isset($_GET['status'])) { ?>
+          <form style="margin-left: 20px;" action="all_invoices.php" method="get">
 <?php
-$statuses_array = array();
-$statuses = $db->Execute("select orders_status_id, orders_status_name
-                          from " . TABLE_ORDERS_STATUS . "
-                          where language_id = '" . (int)$_SESSION['languages_id'] . "'
-                          order by orders_status_id");
-
-while (!$statuses->EOF) {
-  $statuses_array[] = array('id' => $statuses->fields['orders_status_id'],
-                            'text' => $statuses->fields['orders_status_name'] . ' [' . $statuses->fields['orders_status_id'] . ']');
-  $statuses->MoveNext();
-}
 echo zen_draw_pull_down_menu('status', $statuses_array);  /*v2.0.0-c-lat9*/
 ?>
-            <input type="submit" value="Generate">
+          <br>
+&nbsp;&nbsp;&nbsp;&nbsp; 1. <input type="submit" value="Get List">
           </form>
+<?php } else { ?>
+&nbsp;&nbsp;&nbsp;&nbsp; 1. Selected STATUS=<?php echo (int)$orderStatus . '-' . $orders_status_array[$orderStatus]; ?>
+<?php } ?>
+<?php if (count($selected_orders)) { ?>
+      <br>
+          <form style="margin-left: 20px;" action="all_invoices.php" method="post" target="_new">
+<?php
+     echo zen_draw_hidden_field('orderids', implode(',', $selected_orders));
+?>
+            2. <input type="submit" value="Generate"> (will open <?php echo count($selected_orders); ?> orders in a new window)
+          </form>
+
+          <br>
+          <form style="margin-left: 20px;" action="all_invoices.php" method="post">
+<?php
+     echo zen_draw_hidden_field('resetids', implode(',', $selected_orders));
+?>
+            3. <input type="submit" value="Change Status to 2-Processed"> for <?php echo count($selected_orders); ?> orders.
+          </form>
+<?php } ?>
         </td>
       </tr>
     </table></td>
@@ -140,6 +187,3 @@ echo zen_draw_pull_down_menu('status', $statuses_array);  /*v2.0.0-c-lat9*/
 <?php
 
 require(DIR_WS_INCLUDES . 'application_bottom.php');
-
-} // Select status
-?>
