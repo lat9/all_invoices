@@ -28,4 +28,4 @@
 // ===============================================================================
 
 define('FILENAME_ALL_INVOICES', 'all_invoices');
-define ('FILENAME_ALL_PACKINGSLIPS', 'all_packingslips');
+define('FILENAME_ALL_PACKINGSLIPS', 'all_packingslips');

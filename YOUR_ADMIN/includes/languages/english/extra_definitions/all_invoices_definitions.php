@@ -23,9 +23,9 @@
 // Designed for: Zen Cart 1.3.x series
 // Created by: Mathew O'Marah (www.mdodesign.co.uk)
 // Modified by: lat9 (lat9@vinosdefrutastropicales.com) for operation with Zen Cart v1.5.0+
-// 
+//
 // Donations:  Please support Zen Cart!  paypal@zen-cart.com  - Thank you!
 // ===============================================================================
 
 define('BOX_ALL_INVOICES', 'All Invoices');
-define ('BOX_ALL_PACKINGSLIPS', 'All Packing Slips');
+define('BOX_ALL_PACKINGSLIPS', 'All Packing Slips');

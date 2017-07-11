@@ -21,7 +21,7 @@
 //
 // ===============================================================================
 // Add-On: All Invoices
-// Designed for: Zen Cart 
+// Designed for: Zen Cart
 // Created by: Mathew O'Marah (www.mdodesign.co.uk)
 // -------------------------------------------------------------------------------
 // Version 2 modified by: lat9 (lat9@vinosdefrutastropicales.com) for v1.5.0
@@ -59,10 +59,11 @@ define('ENTRY_SHIPPING', 'Shipping:');
 define('ENTRY_TOTAL', 'Total:');
 define('ENTRY_DATE_PURCHASED', 'Date Ordered:');
 
-define('ENTRY_ORDER_ID','Invoice No. ');
+define('ENTRY_ORDER_ID', 'Invoice No. ');
 define('TEXT_INFO_ATTRIBUTE_FREE', '&nbsp;-&nbsp;FREE');
 //-bof-a-v2.0.0-lat9
-define('TEXT_ALL_INVOICE_INFO', 'This allows you to produce a report from which you can print all invoices for a selected Order Status. The report, which opens in a new tab, displays all the matching invoices in one continuous view but, when printed, each invoice starts on a separate page!');
+define('TEXT_ALL_INVOICE_INFO',
+    'This allows you to produce a report from which you can print all invoices for a selected Order Status. The report, which opens in a new tab, displays all the matching invoices in one continuous view but, when printed, each invoice starts on a separate page!');
 define('WARNING_NO_ORDERS', '<strong>Note:</strong> There are currently no orders with an order status of <em>%s</em>.');
 //-eof-a-v2.0.0
 define('ENTRY_BILLING_ADDRESS', 'Billing Address:');
