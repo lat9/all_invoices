@@ -163,20 +163,20 @@ $order = new order( (int)$oID);
   <tr>
     <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
       <tr class="dataTableHeadingRow">
-        <td class="dataTableHeadingContent" WIDTH="40"><?php echo TABLE_HEADING_QUANTITY; ?></td>
-        <td class="dataTableHeadingContent" WIDTH="75"><?php echo TABLE_HEADING_PRODUCTS_MODEL; ?></td>
+        <td class="dataTableHeadingContent" width="40"><?php echo TABLE_HEADING_QUANTITY; ?></td>
+        <td class="dataTableHeadingContent" width="75"><?php echo TABLE_HEADING_PRODUCTS_MODEL; ?></td>
         <td class="dataTableHeadingContent" align="left"><?php echo TABLE_HEADING_PRODUCTS; ?></td>
         <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_PRICE_INCLUDING_TAX; ?></td>
         <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_TOTAL_INCLUDING_TAX; ?></td>
       </tr>
 <?php
-    for ($i = 0, $n = sizeof($order->products); $i < $n; $i++) {
+    for ($i = 0, $n = count($order->products); $i < $n; $i++) {
       echo '      <tr class="dataTableRow">' . "\n";
       echo '        <td class="dataTableContent" valign="top">' . $order->products[$i]['qty'] . '&nbsp;x</td>' . "\n";
       echo '        <td class="dataTableContent" valign="top">' . $order->products[$i]['model'] . '</td>' . "\n";
       echo '        <td class="dataTableContent" valign="top" align="left">' . $order->products[$i]['name'];
 
-      if (isset($order->products[$i]['attributes']) && (($k = sizeof($order->products[$i]['attributes'])) > 0)) {
+      if (isset($order->products[$i]['attributes']) && (($k = count($order->products[$i]['attributes'])) > 0)) {
         for ($j = 0; $j < $k; $j++) {
           echo '<br><nobr><small>&nbsp;<i> - ' . $order->products[$i]['attributes'][$j]['option'] . ': ' . nl2br(zen_output_string_protected($order->products[$i]['attributes'][$j]['value']));
           if ($order->products[$i]['attributes'][$j]['price'] != '0') echo ' (' . $order->products[$i]['attributes'][$j]['prefix'] . $currencies->format($order->products[$i]['attributes'][$j]['price'] * $order->products[$i]['qty'], true, $order->info['currency'], $order->info['currency_value']) . ')';
@@ -200,7 +200,7 @@ $order = new order( (int)$oID);
       <tr>
         <td align="right" colspan="8"><table border="0" cellspacing="0" cellpadding="2">
 <?php
-  for ($i = 0, $n = sizeof($order->totals); $i < $n; $i++) {
+  for ($i = 0, $n = count($order->totals); $i < $n; $i++) {
     echo '          <tr>' . "\n" .
          '            <td align="right" class="'. str_replace('_', '-', $order->totals[$i]['class']) . '-Text">' . $order->totals[$i]['title'] . '</td>' . "\n" .
          '            <td align="right" class="'. str_replace('_', '-', $order->totals[$i]['class']) . '-Amount">' . $order->totals[$i]['text'] . '</td>' . "\n" .

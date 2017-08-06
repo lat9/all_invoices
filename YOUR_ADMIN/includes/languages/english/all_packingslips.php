@@ -21,7 +21,8 @@ define('ENTRY_SHIP_TO', 'SHIP TO:');
 define('ENTRY_PAYMENT_METHOD', 'Payment Method:');
 define('ENTRY_DATE_PURCHASED', 'Date Ordered:');
 
-define('ENTRY_ORDER_ID','Invoice No. ');
+define('ENTRY_ORDER_ID', 'Invoice No. ');
 
-define('TEXT_ALL_PACKINGSLIP_INFO', 'This allows you to produce a report from which you can print packing slips for all orders with a selected Order Status. The report, which opens in a new tab, displays the packing slips for all the matching orders in one continuous view but, when printed, each packing slip starts on a separate page!');
+define('TEXT_ALL_PACKINGSLIP_INFO',
+    'This allows you to produce a report from which you can print packing slips for all orders with a selected Order Status. The report, which opens in a new tab, displays the packing slips for all the matching orders in one continuous view but, when printed, each packing slip starts on a separate page!');
 define('WARNING_NO_ORDERS', '<strong>Note:</strong> There are currently no orders with an order status of <em>%s</em>.');
